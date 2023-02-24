@@ -268,11 +268,12 @@ var MIMEMessageHeader = /*#__PURE__*/function () {
           var _context9;
           var item = _step3.value;
           if (item.placement != this.placement) continue;
-          var v = item.value ? item.value : !item.disabled && typeof item.generator == 'function' ? item.generator(ctx) : null;
-          if (!v && item.required) {
+          var isDefined = typeof item.value !== 'undefined' && typeof item.value !== 'null';
+          var v = isDefined ? item.value : !item.disabled && typeof item.generator == 'function' ? item.generator(ctx) : null;
+          if (!isDefined && item.required) {
             throw new MIMETextError('MISSING_HEADER', "The \"".concat(item.name, "\" header is required."));
           }
-          if (!v) continue;
+          if (!isDefined) continue;
           lines += _concatInstanceProperty__default["default"](_context9 = "".concat(item.name, ": ")).call(_context9, item.dump(v, ctx), "\r\n");
         }
       } catch (err) {
